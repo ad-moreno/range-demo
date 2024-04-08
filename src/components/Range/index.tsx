@@ -9,6 +9,7 @@ const RangeContainer = styled.div`
   align-items: center;
   user-select: none;
   padding: 20px 0;
+  width: 100%;
 `;
 
 const Track = styled.div`
@@ -18,31 +19,31 @@ const Track = styled.div`
   position: relative;
 `;
 
-const Handle = styled.div<{isDragging: boolean; isSelected: boolean}>`
+const Handle = styled.div<{$isDragging: boolean; $isSelected: boolean}>`
   width: 20px;
   height: 20px;
   background-color: #fff;
   border: 2px solid #007bff;
   border-radius: 50%;
   position: absolute;
-  cursor: ${props => (props.isDragging ? 'grabbing' : 'grab')};
-  transform: translate(-50%, -50%) ${props => (props.isSelected ? 'scale(1.2)' : '')};
+  cursor: ${props => (props.$isDragging ? 'grabbing' : 'grab')};
+  transform: translate(-50%, -50%) ${props => (props.$isSelected ? 'scale(1.2)' : '')};
   top: 50%;
 `;
 
-interface MinMaxProps {
+export interface RangeMinMaxProps {
   min: number;
   max: number;
   rangeValues?: never;
 }
 
-interface RangeValuesProps {
+export interface RangeValuesProps {
   min?: never;
   max?: never;
   rangeValues: number[];
 }
 
-type RangeProps = ComponentProps<'div'> & (MinMaxProps | RangeValuesProps);
+type RangeProps = ComponentProps<'div'> & (RangeMinMaxProps | RangeValuesProps);
 
 type HandleType = 'start' | 'end';
 
@@ -114,14 +115,14 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
         <Handle
           style={{left: `${((startValue - minValue) / (maxValue - minValue)) * 100}%`}}
           onMouseDown={e => handleMouseDown(e, 'start')}
-          isDragging={isDragging}
-          isSelected={selectedHandle === 'start'}
+          $isDragging={isDragging}
+          $isSelected={selectedHandle === 'start'}
         />
         <Handle
           style={{left: `${((endValue - minValue) / (maxValue - minValue)) * 100}%`}}
           onMouseDown={e => handleMouseDown(e, 'end')}
-          isDragging={isDragging}
-          isSelected={selectedHandle === 'end'}
+          $isDragging={isDragging}
+          $isSelected={selectedHandle === 'end'}
         />
       </Track>
       <EditablePriceLabel

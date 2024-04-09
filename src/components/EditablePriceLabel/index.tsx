@@ -1,26 +1,11 @@
+'use client';
+
+import classNames from 'classnames';
 import {stringifyValue} from '../../utils/parsing';
-import React, {useState, useRef, CSSProperties, useEffect, useCallback, ComponentProps} from 'react';
-import styled from 'styled-components';
+import React, {useState, useRef, type CSSProperties, useEffect, useCallback, type ComponentProps} from 'react';
 import {z} from 'zod';
 
-const Container = styled.div<{disabled?: boolean}>`
-  cursor: ${({disabled}) => (disabled ? 'unset' : 'pointer')};
-  padding: 0 1.5rem;
-  display: flex;
-  flex-direction: row;
-  gap: 0.4rem;
-  width: fit-content;
-  flex-wrap: nowrap;
-  width: fit-content;
-`;
-
-const StyledInput = styled.input`
-  border: none;
-  border-bottom: 1px solid black;
-  padding: 0 5px;
-  outline: none;
-  text-align: end;
-`;
+import styles from './styles.module.css';
 
 type Props = Omit<ComponentProps<'div'>, 'onChange'> & {
   currency?: string;
@@ -44,6 +29,7 @@ type Props = Omit<ComponentProps<'div'>, 'onChange'> & {
  * @param style Optional styles for the input element.
  */
 const EditablePriceLabel = ({
+  className,
   currency = '€',
   value,
   min = 0,
@@ -85,15 +71,16 @@ const EditablePriceLabel = ({
   }, [inputValue, onChange, validateInput]);
 
   return (
-    <Container
+    <div
+      className={classNames(styles.container, className)}
       onClick={disabled ? undefined : handleClick}
-      disabled={disabled}
-      style={containerStyle}
+      style={{cursor: disabled ? 'unset' : 'pointer', ...containerStyle}}
       data-testid="price-container"
       {...props}
     >
       {isEditing ? (
-        <StyledInput
+        <input
+          className={styles['price-input']}
           ref={inputRef}
           value={inputValue}
           onChange={handleInputChange}
@@ -108,7 +95,7 @@ const EditablePriceLabel = ({
         </div>
       )}
       <div>{currency}</div>
-    </Container>
+    </div>
   );
 };
 

@@ -1,28 +1,12 @@
-import styled from 'styled-components';
-import Range, {RangeMinMaxProps, RangeValuesProps} from '../Range';
-import {ComponentProps, useEffect} from 'react';
-import {UseQueryResult} from '@tanstack/react-query';
+import Range, {type RangeMinMaxProps, type RangeValuesProps} from '../Range';
+import {type ComponentProps} from 'react';
 
-const RangeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  column-gap: 1rem;
-  justify-content: start;
-  align-items: start;
-  width: 40rem;
-`;
-
-const Error = styled.div`
-  background-color: #e9d8d8;
-  color: black;
-  border: 1px solid #9f2020;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-`;
+import styles from './styles.module.css';
+import classNames from 'classnames';
 
 type Props = ComponentProps<'div'> & {
   title: string;
-  query: UseQueryResult<RangeMinMaxProps | RangeValuesProps>;
+  data: RangeMinMaxProps | RangeValuesProps;
 };
 
 /**
@@ -30,20 +14,11 @@ type Props = ComponentProps<'div'> & {
  * @param title Title of the component.
  * @param query The query prop should be used to fetch the minimum and maximum or range values from an API endpoint.
  */
-const DataRange = ({title, query, ...props}: Props) => {
-  useEffect(() => {
-    if (query.isError) console.error(query.error);
-  }, [query.error, query.isError]);
-
+const DataRange = ({title, data, className, ...props}: Props) => {
   return (
-    <div {...props}>
-      {query.isSuccess && (
-        <RangeContainer>
-          <div>{title}</div>
-          <Range {...query.data} />
-        </RangeContainer>
-      )}
-      {query.isError && <Error>{`${query.error.name}: ${query.error.message}`}</Error>}
+    <div className={classNames(styles.container, className)} {...props}>
+      <div>{title}</div>
+      <Range {...data} />
     </div>
   );
 };

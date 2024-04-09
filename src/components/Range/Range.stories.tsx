@@ -1,5 +1,5 @@
 import React from 'react';
-import {StoryFn, Meta} from '@storybook/react';
+import {type StoryFn, type Meta} from '@storybook/react';
 import Range from './';
 
 export default {

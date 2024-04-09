@@ -1,0 +1,17 @@
+.container {
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.4rem;
+  width: fit-content;
+  flex-wrap: nowrap;
+  width: fit-content;
+}
+
+.price-input {
+  border: none;
+  border-bottom: 1px solid black;
+  padding: 0 5px;
+  outline: none;
+  text-align: end;
+}

@@ -1,35 +1,11 @@
-import React, {ComponentProps, useCallback, useMemo, useState} from 'react';
-import styled from 'styled-components';
+'use client';
+
+import React, {type ComponentProps, useCallback, useMemo, useState} from 'react';
 import EditablePriceLabel from '../EditablePriceLabel';
 import {stringifyValue} from '../../utils/parsing';
 
-const RangeContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  user-select: none;
-  padding: 20px 0;
-  width: 100%;
-`;
-
-const Track = styled.div`
-  height: 4px;
-  background: #ddd;
-  flex-grow: 1;
-  position: relative;
-`;
-
-const Handle = styled.div<{$isDragging: boolean; $isSelected: boolean}>`
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
-  border: 2px solid #007bff;
-  border-radius: 50%;
-  position: absolute;
-  cursor: ${props => (props.$isDragging ? 'grabbing' : 'grab')};
-  transform: translate(-50%, -50%) ${props => (props.$isSelected ? 'scale(1.2)' : '')};
-  top: 50%;
-`;
+import styles from './styles.module.css';
+import classNames from 'classnames';
 
 export interface RangeMinMaxProps {
   min: number;
@@ -55,7 +31,7 @@ type HandleType = 'start' | 'end';
  * @param max The maximum value of the range. If `rangeValues` is provided, this parameter is ignored.
  * @param rangeValues An array of values within the range. If this parameter is provided, `min` and `max` are ignored.
  */
-const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
+const Range = ({min, max, rangeValues, className, ...props}: RangeProps) => {
   const sortedRangeValues = useMemo(() => (rangeValues ?? []).sort(), [rangeValues]);
 
   const minValue = sortedRangeValues.at(0) ?? min ?? 0;
@@ -109,7 +85,7 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
   };
 
   return (
-    <RangeContainer {...props}>
+    <div className={classNames(styles.container, className)} {...props}>
       <EditablePriceLabel
         value={startValue}
         min={minValue}
@@ -120,22 +96,28 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
         style={{width: `${stringifyValue(maxValue).length}ch`}}
         data-testid="start-price-label"
       />
-      <Track>
-        <Handle
+      <div className={styles.track}>
+        <div
+          className={styles.handle}
           data-testid="start-handle"
-          style={{left: `${((startValue - minValue) / (maxValue - minValue)) * 100}%`}}
+          style={{
+            left: `${((startValue - minValue) / (maxValue - minValue)) * 100}%`,
+            cursor: isDragging ? 'grabbing' : 'grab',
+            transform: `translate(-50%, -50%) ${selectedHandle === 'start' ? 'scale(1.2)' : ''}`,
+          }}
           onMouseDown={e => handleMouseDown(e, 'start')}
-          $isDragging={isDragging}
-          $isSelected={selectedHandle === 'start'}
         />
-        <Handle
+        <div
+          className={styles.handle}
           data-testid="end-handle"
-          style={{left: `${((endValue - minValue) / (maxValue - minValue)) * 100}%`}}
+          style={{
+            left: `${((endValue - minValue) / (maxValue - minValue)) * 100}%`,
+            cursor: isDragging ? 'grabbing' : 'grab',
+            transform: `translate(-50%, -50%) ${selectedHandle === 'end' ? 'scale(1.2)' : ''}`,
+          }}
           onMouseDown={e => handleMouseDown(e, 'end')}
-          $isDragging={isDragging}
-          $isSelected={selectedHandle === 'end'}
         />
-      </Track>
+      </div>
       <EditablePriceLabel
         value={endValue}
         min={startValue}
@@ -146,7 +128,7 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
         style={{width: `${stringifyValue(maxValue).length}ch`}}
         data-testid="end-price-label"
       />
-    </RangeContainer>
+    </div>
   );
 };
 

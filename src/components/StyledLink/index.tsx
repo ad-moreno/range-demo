@@ -1,21 +1,8 @@
-import styled from 'styled-components';
-import {Link, LinkProps} from 'react-router-dom';
-import {ComponentProps} from 'react';
+import {type ComponentPropsWithoutRef, type ComponentProps} from 'react';
+import Link from 'next/link';
 
-const LinkStyled = styled(Link)`
-  display: flex;
-  flex-direction: row;
-  column-gap: 1rem;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #007bff;
-  text-decoration: none;
-  transition: filter 0.3s ease;
-  &:hover {
-    filter: brightness(75%);
-  }
-`;
+import styles from './styles.module.css';
+import classNames from 'classnames';
 
 const ArrowRight = (props: ComponentProps<'svg'>) => (
   <svg
@@ -32,12 +19,12 @@ const ArrowRight = (props: ComponentProps<'svg'>) => (
   </svg>
 );
 
-const StyledLink = ({children, ...props}: LinkProps) => {
+const StyledLink = ({children, className, ...props}: ComponentPropsWithoutRef<typeof Link>) => {
   return (
-    <LinkStyled {...props}>
+    <Link className={classNames(styles.link, className)} {...props}>
       {children}
       <ArrowRight />
-    </LinkStyled>
+    </Link>
   );
 };
 

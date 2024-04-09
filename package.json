@@ -4,22 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "check-eslint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check-eslint": "eslint 'src/**/**.?(js|jsx|ts|tsx)' --fix",
     "check-prettier": "prettier 'src/**/*.?(js|jsx|ts|tsx|md|css)' --write",
     "check-all": "npm run check-eslint && npm run check-prettier && tsc && npm test",
-    "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.29.0",
+    "classnames": "^2.5.1",
+    "next": "^14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "styled-components": "^6.1.8",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -39,8 +38,8 @@
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.57.0",
+    "eslint-config-next": "^14.1.4",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
@@ -49,10 +48,8 @@
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.2.5",
     "storybook": "^8.0.6",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "vitest": "^1.4.0"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "extends": [

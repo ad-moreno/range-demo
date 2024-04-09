@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StoryFn, Meta} from '@storybook/react';
+import {type StoryFn, type Meta} from '@storybook/react';
 import EditablePriceLabel from './';
 
 export default {

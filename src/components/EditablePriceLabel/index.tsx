@@ -1,5 +1,5 @@
 import {stringifyValue} from '../../utils/parsing';
-import React, {useState, useRef, CSSProperties, useEffect, useCallback} from 'react';
+import React, {useState, useRef, CSSProperties, useEffect, useCallback, ComponentProps} from 'react';
 import styled from 'styled-components';
 import {z} from 'zod';
 
@@ -22,15 +22,14 @@ const StyledInput = styled.input`
   text-align: end;
 `;
 
-type Props = {
+type Props = Omit<ComponentProps<'div'>, 'onChange'> & {
   currency?: string;
   value: number;
   min?: number;
   max?: number;
   disabled?: boolean;
-  onChange: (value: number) => void;
+  onChange?: (value: number) => void;
   containerStyle?: CSSProperties;
-  style?: CSSProperties;
 };
 
 const EditablePriceLabel = ({
@@ -42,6 +41,7 @@ const EditablePriceLabel = ({
   onChange,
   containerStyle,
   style,
+  ...props
 }: Props) => {
   const initialValue = stringifyValue(value);
   const [isEditing, setEditing] = useState(false);
@@ -70,11 +70,17 @@ const EditablePriceLabel = ({
   useEffect(() => {
     // Update the parent component's value if the input is valid
     const result = validateInput(inputValue);
-    if (result.success) onChange(result.data);
+    if (result.success && onChange) onChange(result.data);
   }, [inputValue, onChange, validateInput]);
 
   return (
-    <Container onClick={disabled ? undefined : handleClick} disabled={disabled} style={containerStyle}>
+    <Container
+      onClick={disabled ? undefined : handleClick}
+      disabled={disabled}
+      style={containerStyle}
+      data-testid="price-container"
+      {...props}
+    >
       {isEditing ? (
         <StyledInput
           ref={inputRef}
@@ -83,9 +89,12 @@ const EditablePriceLabel = ({
           onBlur={handleBlur}
           autoFocus
           style={style}
+          data-testid="price-input"
         />
       ) : (
-        <div style={{textAlign: 'end', ...style}}>{value}</div>
+        <div style={{textAlign: 'end', ...style}} data-testid="price-label">
+          {value}
+        </div>
       )}
       <div>{currency}</div>
     </Container>

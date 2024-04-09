@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Range, {RangeMinMaxProps, RangeValuesProps} from '../components/Range';
 import {useFixedRangeData, useNormalRangeData} from '../content/hooks';
-import {useEffect} from 'react';
+import {ComponentProps, useEffect} from 'react';
 import {UseQueryResult} from '@tanstack/react-query';
 
 const Container = styled.div`
@@ -31,18 +31,18 @@ const Error = styled.div`
   padding: 0.5rem 1rem;
 `;
 
-type DataRangeProps = {
+type DataRangeProps = ComponentProps<'div'> & {
   title: string;
   query: UseQueryResult<RangeMinMaxProps | RangeValuesProps>;
 };
 
-const DataRange = ({title, query}: DataRangeProps) => {
+const DataRange = ({title, query, ...props}: DataRangeProps) => {
   useEffect(() => {
     if (query.isError) console.error(query.error);
   }, [query.error, query.isError]);
 
   return (
-    <>
+    <div {...props}>
       {query.isSuccess && (
         <RangeContainer>
           <div>{title}</div>
@@ -50,7 +50,7 @@ const DataRange = ({title, query}: DataRangeProps) => {
         </RangeContainer>
       )}
       {query.isError && <Error>{`${query.error.name}: ${query.error.message}`}</Error>}
-    </>
+    </div>
   );
 };
 
@@ -60,8 +60,8 @@ const Home = () => {
 
   return (
     <Container>
-      <DataRange title="Normal Range" query={normalRangeDataQuery} />
-      <DataRange title="Fixed Range" query={fixedRangeDataQuery} />
+      <DataRange title="Normal Range" query={normalRangeDataQuery} data-testid="normal-range" />
+      <DataRange title="Fixed Range" query={fixedRangeDataQuery} data-testid="fixed-range" />
     </Container>
   );
 };

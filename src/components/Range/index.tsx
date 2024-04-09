@@ -110,15 +110,18 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
         onChange={setStartValue}
         containerStyle={{justifyContent: 'end'}}
         style={{width: `${stringifyValue(maxValue).length}ch`}}
+        data-testid="start-price-label"
       />
       <Track>
         <Handle
+          data-testid="start-handle"
           style={{left: `${((startValue - minValue) / (maxValue - minValue)) * 100}%`}}
           onMouseDown={e => handleMouseDown(e, 'start')}
           $isDragging={isDragging}
           $isSelected={selectedHandle === 'start'}
         />
         <Handle
+          data-testid="end-handle"
           style={{left: `${((endValue - minValue) / (maxValue - minValue)) * 100}%`}}
           onMouseDown={e => handleMouseDown(e, 'end')}
           $isDragging={isDragging}
@@ -133,6 +136,7 @@ const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
         onChange={setEndValue}
         containerStyle={{justifyContent: 'start'}}
         style={{width: `${stringifyValue(maxValue).length}ch`}}
+        data-testid="end-price-label"
       />
     </RangeContainer>
   );

@@ -47,6 +47,14 @@ type RangeProps = ComponentProps<'div'> & (RangeMinMaxProps | RangeValuesProps);
 
 type HandleType = 'start' | 'end';
 
+/**
+ * A customizable range component that allows the user to select a value within a given range.
+ * The component can be used to display either a minimum and maximum value or an array of values.
+ *
+ * @param min The minimum value of the range. If `rangeValues` is provided, this parameter is ignored.
+ * @param max The maximum value of the range. If `rangeValues` is provided, this parameter is ignored.
+ * @param rangeValues An array of values within the range. If this parameter is provided, `min` and `max` are ignored.
+ */
 const Range = ({min, max, rangeValues, ...props}: RangeProps) => {
   const sortedRangeValues = useMemo(() => (rangeValues ?? []).sort(), [rangeValues]);
 

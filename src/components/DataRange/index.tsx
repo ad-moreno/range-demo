@@ -25,6 +25,11 @@ type Props = ComponentProps<'div'> & {
   query: UseQueryResult<RangeMinMaxProps | RangeValuesProps>;
 };
 
+/**
+ * DataRange is a React component that displays the minimum and maximum values of a data range.
+ * @param title Title of the component.
+ * @param query The query prop should be used to fetch the minimum and maximum or range values from an API endpoint.
+ */
 const DataRange = ({title, query, ...props}: Props) => {
   useEffect(() => {
     if (query.isError) console.error(query.error);

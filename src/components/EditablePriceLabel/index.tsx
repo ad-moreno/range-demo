@@ -32,6 +32,17 @@ type Props = Omit<ComponentProps<'div'>, 'onChange'> & {
   containerStyle?: CSSProperties;
 };
 
+/**
+ * A custom component that displays a price label with an editable input.
+ * @param currency The currency symbol to use for the price label. Defaults to '€'.
+ * @param value The initial value of the price label.
+ * @param min The minimum allowed value for the price label. Defaults to 0.
+ * @param max The maximum allowed value for the price label. Defaults to Infinity.
+ * @param disabled Whether the price label should be editable or not. Defaults to false.
+ * @param onChange A function that will be called when the user updates the price label.
+ * @param containerStyle Optional styles for the container element.
+ * @param style Optional styles for the input element.
+ */
 const EditablePriceLabel = ({
   currency = '€',
   value,

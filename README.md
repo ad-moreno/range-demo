@@ -26,7 +26,7 @@ A collection of stories has been implemented for testing and documenting the com
 
 ## Technologies Used
 
-This application was designed using TypeScript, React, and Vite. For querying and cache management, React Query is used. In terms of testing, Jest and Testing Library are employed to guarantee the application functions as intended. The data from Mock API is validated via Zod schemas to assure the data structure is as expected.
+This application was designed using TypeScript, React, and Next.js. Data is retrieved from the server and statically rendered to maintain high performance. In terms of testing, Jest and Testing Library are employed to guarantee the application functions as intended. The data from Mock API is validated via Zod schemas to assure the data structure is as expected.
 
 ## Getting Started
 
@@ -38,12 +38,12 @@ This application was designed using TypeScript, React, and Vite. For querying an
 ### Production Mode
 
 - Build the application using `npm run build`.
-- In the `dist` directory, you'll find the static files that are ready for use. They can be tested using, for example, the [serve](https://www.npmjs.com/package/serve) command `npx serve dist`.
+- Serve the app using `npm run start`.
 
 ### Development Mode
 
 - Start the development server with `npm run dev` for hot reloading and dynamic page behavior.
-- Go to http://localhost:8080/.
+- Go to http://localhost:3000/.
 
 ### Storybook Mode
 

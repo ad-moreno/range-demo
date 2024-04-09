@@ -32,7 +32,7 @@ type HandleType = 'start' | 'end';
  * @param rangeValues An array of values within the range. If this parameter is provided, `min` and `max` are ignored.
  */
 const Range = ({min, max, rangeValues, className, ...props}: RangeProps) => {
-  const sortedRangeValues = useMemo(() => (rangeValues ?? []).sort(), [rangeValues]);
+  const sortedRangeValues = useMemo(() => (rangeValues ?? []).sort((a, b) => (a > b ? 1 : -1)), [rangeValues]);
 
   const minValue = sortedRangeValues.at(0) ?? min ?? 0;
   const maxValue = sortedRangeValues.at(-1) ?? max ?? 0;
@@ -106,6 +106,13 @@ const Range = ({min, max, rangeValues, className, ...props}: RangeProps) => {
             transform: `translate(-50%, -50%) ${selectedHandle === 'start' ? 'scale(1.2)' : ''}`,
           }}
           onMouseDown={e => handleMouseDown(e, 'start')}
+        />
+        <div
+          className={styles['track-between']}
+          style={{
+            left: `${((startValue - minValue) / (maxValue - minValue)) * 100}%`,
+            right: `${100 - ((endValue - minValue) / (maxValue - minValue)) * 100}%`,
+          }}
         />
         <div
           className={styles.handle}

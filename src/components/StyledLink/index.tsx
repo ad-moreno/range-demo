@@ -11,7 +11,7 @@ const ArrowRight = (props: ComponentProps<'svg'>) => (
     width={20}
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={2}
     stroke="currentColor"
     {...props}
   >

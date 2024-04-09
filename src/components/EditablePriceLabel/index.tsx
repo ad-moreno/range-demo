@@ -49,16 +49,15 @@ const EditablePriceLabel = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
-  const handleBlur = () => setEditing(false);
-
-  const handleClick = () => {
-    setEditing(true);
+  const handleBlur = () => {
+    setEditing(false);
     setInputValue(initialValue);
-    // Move the cursor to the end of the text in the input
-    if (inputRef.current) {
-      const length = inputRef.current.value.length;
-      inputRef.current.focus();
-      inputRef.current.setSelectionRange(length, length);
+  };
+
+  const handleFocus = () => {
+    if (!disabled) {
+      setEditing(true);
+      setInputValue(initialValue);
     }
   };
 
@@ -73,28 +72,22 @@ const EditablePriceLabel = ({
   return (
     <div
       className={classNames(styles.container, className)}
-      onClick={disabled ? undefined : handleClick}
-      style={{cursor: disabled ? 'unset' : 'pointer', ...containerStyle}}
+      style={{cursor: disabled ? 'unset' : isEditing ? 'text' : 'pointer', ...containerStyle}}
       data-testid="price-container"
       {...props}
     >
-      {isEditing ? (
-        <input
-          className={styles['price-input']}
-          ref={inputRef}
-          value={inputValue}
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          autoFocus
-          style={style}
-          data-testid="price-input"
-        />
-      ) : (
-        <div style={{textAlign: 'end', ...style}} data-testid="price-label">
-          {value}
-        </div>
-      )}
-      <div>{currency}</div>
+      <input
+        className={styles.input}
+        ref={inputRef}
+        value={inputValue}
+        onChange={handleInputChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        style={{borderBottom: isEditing ? '1px solid black' : undefined, ...style}}
+        data-testid="price-input"
+        disabled={disabled}
+      />
+      <div className={styles.currency}>{currency}</div>
     </div>
   );
 };

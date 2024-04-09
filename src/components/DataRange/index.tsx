@@ -17,7 +17,7 @@ type Props = ComponentProps<'div'> & {
 const DataRange = ({title, data, className, ...props}: Props) => {
   return (
     <div className={classNames(styles.container, className)} {...props}>
-      <div>{title}</div>
+      <div className={styles.title}>{title}</div>
       <Range {...data} />
     </div>
   );

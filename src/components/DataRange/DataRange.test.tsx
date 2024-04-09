@@ -3,20 +3,20 @@ import '@testing-library/jest-dom';
 
 import DataRange from '.';
 
-describe('Home component', () => {
+describe('Data range', () => {
   it('should render normal range data', async () => {
-    const {container} = render(<DataRange title="Normal Range" data={{min: 2, max: 10}} />);
+    const {container, getByDisplayValue} = render(<DataRange title="Normal Range" data={{min: 2, max: 10}} />);
 
     expect(container.textContent).toContain('Normal Range');
-    expect(container.textContent).toContain('2');
-    expect(container.textContent).toContain('10');
+    expect(getByDisplayValue('2')).toBeDefined();
+    expect(getByDisplayValue('10')).toBeDefined();
   });
 
   it('should render fixed range data', async () => {
-    const {container} = render(<DataRange title="Fixed Range" data={{rangeValues: [4, 15]}} />);
+    const {container, getByDisplayValue} = render(<DataRange title="Fixed Range" data={{rangeValues: [4, 10, 15]}} />);
 
     expect(container.textContent).toContain('Fixed Range');
-    expect(container.textContent).toContain('4');
-    expect(container.textContent).toContain('15');
+    expect(getByDisplayValue('4')).toBeDefined();
+    expect(getByDisplayValue('15')).toBeDefined();
   });
 });

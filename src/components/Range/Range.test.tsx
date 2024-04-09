@@ -33,8 +33,8 @@ describe('Range', () => {
   it('should render the correct labels for the price range', () => {
     const {getByTestId} = render(<Range {...props} />);
 
-    expect(getByTestId('start-price-label').textContent).toContain('0');
-    expect(getByTestId('end-price-label').textContent).toContain('100');
+    expect(getByTestId('start-price-label').querySelector('input')).toHaveAttribute('value', '0');
+    expect(getByTestId('end-price-label').querySelector('input')).toHaveAttribute('value', '100');
   });
 
   it('should move the start handle when dragged', async () => {
@@ -60,7 +60,8 @@ describe('Range', () => {
     fireEvent.mouseUp(startHandle);
 
     expect(startHandle.style.left).toEqual('50%');
-    expect(getByTestId('start-price-label').textContent).toContain('50');
+
+    expect(getByTestId('start-price-label').querySelector('input')).toHaveAttribute('value', '50');
   });
 
   it('should move the end handle when dragged', async () => {
@@ -85,7 +86,7 @@ describe('Range', () => {
     fireEvent.mouseUp(endHandle);
 
     expect(endHandle.style.left).toEqual('25%');
-    expect(getByTestId('end-price-label').textContent).toContain('25');
+    expect(getByTestId('end-price-label').querySelector('input')).toHaveAttribute('value', '25');
   });
 
   it('works with rangeValues props', () => {
@@ -117,8 +118,8 @@ describe('Range', () => {
     expect(Math.floor(parseFloat(startHandle.style.left.split('%')[0]))).toEqual(33);
     expect(Math.floor(parseFloat(endHandle.style.left.split('%')[0]))).toEqual(66);
 
-    expect(getByTestId('start-price-label').textContent).toContain('20');
-    expect(getByTestId('end-price-label').textContent).toContain('30');
+    expect(getByTestId('start-price-label').querySelector('input')).toHaveAttribute('value', '20');
+    expect(getByTestId('end-price-label').querySelector('input')).toHaveAttribute('value', '30');
   });
 
   it('approximates the user input to rangeValues props', () => {
@@ -150,7 +151,7 @@ describe('Range', () => {
     expect(Math.floor(parseFloat(startHandle.style.left.split('%')[0]))).toEqual(33);
     expect(Math.floor(parseFloat(endHandle.style.left.split('%')[0]))).toEqual(66);
 
-    expect(getByTestId('start-price-label').textContent).toContain('20');
-    expect(getByTestId('end-price-label').textContent).toContain('30');
+    expect(getByTestId('start-price-label').querySelector('input')).toHaveAttribute('value', '20');
+    expect(getByTestId('end-price-label').querySelector('input')).toHaveAttribute('value', '30');
   });
 });

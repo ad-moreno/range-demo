@@ -21,7 +21,7 @@ const normalRangeDataSchema = z.object({
   max: z.number(),
 });
 
-type NormalRangeData = z.infer<typeof normalRangeDataSchema>;
+export type NormalRangeData = z.infer<typeof normalRangeDataSchema>;
 
 export const useNormalRangeData = () =>
   useMockedData<NormalRangeData>([NORMAL_RANGE_QUERY_KEY], normalRangeEndpoint, normalRangeDataSchema);
@@ -32,7 +32,7 @@ const fixedRangeDataSchema = z.object({
   rangeValues: z.number().array(),
 });
 
-type FixedRangeData = z.infer<typeof fixedRangeDataSchema>;
+export type FixedRangeData = z.infer<typeof fixedRangeDataSchema>;
 
 export const useFixedRangeData = () =>
   useMockedData<FixedRangeData>([FIXED_RANGE_QUERY_KEY], fixedRangeEndpoint, fixedRangeDataSchema);

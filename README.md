@@ -6,14 +6,19 @@
 
 This web application serves as a demonstration of the functionality of a slider with two distinct values, ranging from a fixed to a continuous value.
 
+![Ranges](docs/ranges.png)
+
 ## Features
 
-### Home Page
+### Exercise 1 Page
 
-- Collects limits and data for a slider with both a continuous range and a fixed value through a Mock API using [mockable.io](https://www.mockable.io/).
-- Displays the sliders using the obtained data from the API.
+- Collects limits and data for a slider with a continuous range through a Mock API using [mockable.io](https://www.mockable.io/).
+- Displays the slider using the obtained data from the API.
 
-![Home](docs/ranges.png)
+### Exercise 2 Page
+
+- Collects limits and data for a slider with fixed values through a Mock API using [mockable.io](https://www.mockable.io/).
+- Displays the slider using the obtained data from the API.
 
 ### Storybook
 
@@ -38,10 +43,12 @@ This application was designed using TypeScript, React, and Vite. For querying an
 ### Development Mode
 
 - Start the development server with `npm run dev` for hot reloading and dynamic page behavior.
+- Go to http://localhost:8080/.
 
 ### Storybook Mode
 
 - Execute `npm run storybook` to start a Storybook instance that showcases the components used in this application. You can manually change props on each component to see how it looks and behaves differently.
+- Go to http://localhost:6006/.
 
 ### Running Tests
 

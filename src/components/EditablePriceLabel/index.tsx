@@ -40,34 +40,33 @@ const EditablePriceLabel = ({
   style,
   ...props
 }: Props) => {
-  const initialValue = stringifyValue(value);
+  const externalValue = stringifyValue(value);
   const [isEditing, setEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(initialValue);
+  const [inputValue, setInputValue] = useState(externalValue);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const validateInput = useCallback((s: string) => z.coerce.number().gte(min).lte(max).safeParse(s), [min, max]);
+  const validateInput = useCallback((s: string) => z.coerce.number().gt(min).lt(max).safeParse(s), [min, max]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    // Update the parent component's value if the input is valid
+    const result = validateInput(e.target.value);
+    if (result.success && onChange) onChange(result.data);
+  };
 
   const handleBlur = () => {
     setEditing(false);
-    setInputValue(initialValue);
+    setInputValue(externalValue);
   };
 
   const handleFocus = () => {
     if (!disabled) {
       setEditing(true);
-      setInputValue(initialValue);
+      setInputValue(externalValue);
     }
   };
 
-  useEffect(() => setInputValue(initialValue), [initialValue]);
-
-  useEffect(() => {
-    // Update the parent component's value if the input is valid
-    const result = validateInput(inputValue);
-    if (result.success && onChange) onChange(result.data);
-  }, [inputValue, onChange, validateInput]);
+  useEffect(() => setInputValue(externalValue), [externalValue]);
 
   return (
     <div
